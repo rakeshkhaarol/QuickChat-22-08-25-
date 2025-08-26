@@ -1,12 +1,12 @@
 //import area
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import assets from '../assets/assets'
 
 
 //definetion area
 function Login() {
   //hooks area
-  const [currentState, setCorrentState] = useState("sign up")
+  const [currentState, setCorrentState] = useState("Sign up")
   const [fullName, setFullName] = useState("")
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
@@ -15,20 +15,31 @@ function Login() {
 
 
   //function definetion area
-
+const onSubmitData = (e)=> {
+  // /e.preventDefault
+  e.preventDefault()   
+// alert('hii')
+if(currentState === 'Sign up' && !isDataSubbmited){
+  setIsDataSubbmited(true)
+  return;
+}
+}
 
 
   //return statment
   return (
     <div className='min-h-screen bg-cover bg-center flex items-center justify-center gap-8 sm:justify-evenly mx-sm:flex-col backdrop-blur-2xl'>
       <img src={assets.logo_big} alt='' className='w-[min(30vw-250px)]' />
-      <form className='border-2 bg-white/8 text-white border-gray-500 p-6 flex flex-col gap-6 rounded-lg shadow-lg'>
+      <form onSubmit={onSubmitData} className='border-2 bg-white/8 text-white border-gray-500 p-6 flex flex-col gap-6 rounded-lg shadow-lg'>
         <h2 className='font-medium text-2xl flex justify-between items-center'>
           {currentState}
-          <img src={assets.arrow_icon} alt=' ' className='w-5 cursor-pointer' />
+          {
+            isDataSubbmited && <img onClick={() => setIsDataSubbmited(false)}
+              src={assets.arrow_icon} alt=' ' className='w-5 cursor-pointer' />
+          }
         </h2>
         {
-          currentState === 'sign up' && !isDataSubbmited && (
+          currentState === 'Sign up' && !isDataSubbmited && (
 
             <input type='text' onChange={(e) => setFullName(e.target.value)} value={fullName}
               className=' p-2 border border-gray-500 rounded-md focus:outline-none'
@@ -48,36 +59,36 @@ function Login() {
           )
         }
         {
-          currentState === 'sign up' && isDataSubbmited && (
+          currentState === 'Sign up' && isDataSubbmited && (
             <textarea onChange={(e) => setBio(e.target.value)} value={bio}
               className='p-2 border border-gray-500 rounded-md focus:outline-none
-    focus:ring-indigo-500 focus:ring-2' id="" placeholder='provide the short bio ...'></textarea>
+    focus:ring-indigo-500 focus:ring-2' id="" placeholder='provide the short bio ...' required></textarea>
           )
         }
 
         <button type='submit' className='py-3 bg-gradient-to-r from-purple-400 to-violet-300 text-white rounded-md cursor-pointer'>
           {
-            currentState === "sign up" ? "create account" : " login"
+            currentState === "Sign up" ? "create account" : " login"
           }
         </button>
 
         <div className='flex items-center gap-2 text-sm text-gray-500'>
-          <input type='checkbox' required/>
+          <input type='checkbox' required />
           <p >Agree to the term of use & privacy policy</p>
         </div>
         <div className='flex flex-col gap-2'>
-{
-  currentState === "sign up" ? (
-    <p className='text-sm text-gray-600 '>Already have an account? 
-      <span onClick={()=>{setCorrentState("login"); setIsDataSubbmited(false)}} className='ps-2 font-medium text-violet-500 cursor-pointer'>login</span> 
-      </p>
-  ) : (
-    <p className='text-sm text-gray-600'>
-      create an account
-      <span onClick={()=>{setCorrentState("sign up")}} className='font-medium text-violet-500 cursor-pointer'>click here</span>
-    </p>
-  )
-}
+          {
+            currentState === "Sign up" ? (
+              <p className='text-sm text-gray-600 '>Already have an account?
+                <span onClick={() => { setCorrentState("Login"); setIsDataSubbmited(false) }} className='ps-2 font-medium text-violet-500 cursor-pointer'>Login Here</span>
+              </p>
+            ) : (
+              <p className='text-sm text-gray-600'>
+                create an account?
+                <span onClick={() => { setCorrentState("Sign up") }} className='ps-2 font-medium text-violet-500 cursor-pointer'>click here</span>
+              </p>
+            )
+          }
         </div>
       </form>
 

@@ -1,6 +1,7 @@
 //import area
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import assets from '../assets/assets'
+import { AuthContext } from '../../context/AuthContext'
 
 
 //definetion area
@@ -14,16 +15,19 @@ function Login() {
   const [isDataSubbmited, setIsDataSubbmited] = useState(false)
 
 
+  const { login } = useContext(AuthContext)
   //function definetion area
-const onSubmitData = (e)=> {
-  // /e.preventDefault
-  e.preventDefault()   
-// alert('hii')
-if(currentState === 'Sign up' && !isDataSubbmited){
-  setIsDataSubbmited(true)
-  return;
-}
-}
+  const onSubmitData = (e) => {
+    // /e.preventDefault
+    e.preventDefault()
+    // alert('hii')
+    if (currentState === 'Sign up' && !isDataSubbmited) {
+      setIsDataSubbmited(true)
+      return;
+    }
+    login(currentState === "Sign up" ? 'signup' : 'login', { fullName, email, password, bio })
+
+  }
 
 
   //return statment
